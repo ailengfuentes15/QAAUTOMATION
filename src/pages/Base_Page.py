@@ -1,5 +1,7 @@
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.support.ui import Select
 
 
 class BasePage:
@@ -18,3 +20,30 @@ class BasePage:
     def click(self, locator):
         element = self.wait_for_element(locator)
         element.click()
+
+    def type_text(self, locator, text):
+        element = self.wait_for_element(locator)
+        element.clear()
+        element.send_keys(text)
+
+    def select_from_dropdown_by_visible_text(self, locator, text):
+        dropdown = Select(self.wait_for_element(locator))
+        dropdown.select_by_visible_text(text)
+
+    def select_from_dropdown_by_index(self, locator, index):
+        dropdown = Select(self.wait_for_element(locator))
+        dropdown.select_by_index(index)
+
+    def select_element(self, locator):
+        element = self.wait_for_element(locator)
+        if not element.is_selected():
+            element.click()
+
+    def unselect_checkbox(self, locator):
+        checkbox = self.wait_for_element(locator)
+        if checkbox.is_selected():
+            checkbox.click()
+
+    def hover_over_element(self, locator):
+        element = self.wait_for_element(locator)
+        ActionChains(self.driver).move_to_element(element).perform()
