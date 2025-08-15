@@ -13,5 +13,5 @@ def browser():
     driver.quit()
 
 @pytest.fixture
-def sandbox_page(browser):
+def sanbox_page(browser):
     return SanboxPage(browser)
